@@ -37,7 +37,6 @@ class TariffDiff
 
     def connection_for(url, host_name)
       Faraday.new(url: url) do |conn|
-        conn.adapter Faraday.default_adapter
         conn.request :json
         conn.response :json, :content_type => /\bjson$/
 
@@ -46,7 +45,10 @@ class TariffDiff
         @passwd = ENV["#{host_name}passwd"]
         if @user || @passwd
           conn.request :basic_auth, @user, @passwd
+          conn.adapter :net_http
         end
+
+        conn.adapter Faraday.default_adapter
       end
     end
   end

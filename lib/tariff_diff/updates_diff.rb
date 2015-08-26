@@ -65,16 +65,19 @@ class TariffDiff
           host2: hosts_updates[1]
         })
 
-        max_page = max_page_for(responses.first)
+        max_page = max_page_for(responses)
         if options[:page] < max_page
           fetch_updates(page: options[:page]+1)
         end
       end
     end
 
-    def max_page_for(response)
-      pagination = response["pagination"]
-      max_page = (pagination["total_count"] / pagination["per_page"].to_f).ceil
+    def max_page_for(responses)
+      max_pages = responses.map do |response|
+        pagination = response["pagination"]
+        max_page = (pagination["total_count"] / pagination["per_page"].to_f).ceil
+      end
+      max_pages.max
     end
   end
 end
