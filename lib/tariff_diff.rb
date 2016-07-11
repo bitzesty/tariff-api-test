@@ -1,3 +1,4 @@
+require 'byebug'
 require_relative "hash"
 
 require "faraday"

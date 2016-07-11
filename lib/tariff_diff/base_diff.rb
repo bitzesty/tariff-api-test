@@ -39,6 +39,7 @@ class TariffDiff
       Faraday.new(url: url) do |conn|
         conn.request :json
         conn.response :json, :content_type => /\bjson$/
+        conn.response :logger
 
         # setup basic auth (if needed)
         @user   = ENV["#{host_name}user"]

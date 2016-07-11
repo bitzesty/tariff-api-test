@@ -30,7 +30,7 @@ class TariffDiff
     private
 
     def chapters_diff
-      url = "chapters.json"
+      url = "chapters.json?as_of=2016-07-10"
       responses_for(url).tap do |responses|
         if responses.first.to_s != responses.last.to_s
           puts "\nChapters don't match. Endpoint: #{url}"
@@ -61,7 +61,7 @@ class TariffDiff
 
     def diff_for(resource, id=nil)
       @resources_count += 1
-      url = "#{resource.pluralize}/#{id}.json"
+      url = "#{resource.pluralize}/#{id}.json?as_of=2016-07-10"
       responses = responses_for(url)
       if responses.first.to_s != responses.last.to_s
         puts "\n#{resource} #{id} doesn't match. Endpoint: #{url}"

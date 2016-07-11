@@ -6,5 +6,5 @@ gem "faraday_middleware"
 gem "activesupport"
 
 group :development do
-  gem "pry"
+  gem "byebug"
 end
