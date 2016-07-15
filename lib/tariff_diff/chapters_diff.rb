@@ -63,10 +63,10 @@ class TariffDiff
       @resources_count += 1
       url = "#{resource.pluralize}/#{id}.json?as_of=2016-07-10"
       responses = responses_for(url)
-      if responses.first.to_s != responses.last.to_s
+      diff = responses[0] - responses[1]
+      if diff.present?
         puts "\n#{resource} #{id} doesn't match. Endpoint: #{url}"
-        not_matching[resource.pluralize.to_sym] << id
-        show_diff(responses) if responses.all?{|r| r.is_a?(Hash)}
+        puts diff
       end
       responses.first
     end
