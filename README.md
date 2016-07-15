@@ -21,4 +21,4 @@ bundle exec rake tariff:updates_diff[http://tariff.dev.gov.uk:3018/,https://www.
 ```
 
 
-bundle exec rake tariff:chapters_diff[https://tariff-frontend-dev.cloudapps.digital/trade-tariff,https://www.gov.uk/trade-tariff]
+bundle exec rake tariff:chapters_diff[https://www.gov.uk/trade-tariff, https://tariff-frontend-dev.cloudapps.digital/trade-tariff]

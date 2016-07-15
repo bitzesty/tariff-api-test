@@ -1,5 +1,3 @@
-require "active_support/inflector"
-
 class TariffDiff
   class BaseDiff
     attr_reader :host1, :host2
@@ -23,12 +21,14 @@ class TariffDiff
     end
 
     def responses_for(url)
+      puts url
+      # byebug
       hosts.map { |h|
         host = send(h)
         host.get(url).tap do |response|
-          if response.status == 404 # 404 urls
+          if response.status != 200
             full_url = response.env[:url].to_s
-            puts "404: #{full_url}"
+            ERROR_LOG.info "ERROR: #{full_url}"
             not_found << full_url
           end
         end
