@@ -83,18 +83,18 @@ class TariffDiff
       return if responses[0].status != 200 || responses[1].status != 200
       first = responses[0].body
       if first['import_measures']
-        first['import_measures'] = first['import_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+        first['import_measures'] = first['import_measures'].sort{|x,y|x['id'] <=> y['id']}
       end
       if first['export_measures']
-        first['export_measures'] = first['export_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+        first['export_measures'] = first['export_measures'].sort{|x,y|x['id'] <=> y['id']}
       end
 
       second = responses[1].body
       if second['import_measures']
-        second['import_measures'] = second['import_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+        second['import_measures'] = second['import_measures'].sort{|x,y|x['id'] <=> y['id']}
       end
       if second['export_measures']
-        second['export_measures'] = second['export_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+        second['export_measures'] = second['export_measures'].sort{|x,y|x['id'] <=> y['id']}
       end
 
       LOG.info Diffy::Diff.new(JSON.pretty_generate(first), JSON.pretty_generate(second), :context => 5).to_s
