@@ -5,7 +5,7 @@ require 'diffy'
 require "faraday"
 require "faraday_middleware"
 require 'logger'
-LOG = Logger.new('diff.txt')
+LOG = Logger.new(STDOUT)
 ERROR_LOG = Logger.new('errors.txt')
 
 require_relative "tariff_diff/chapters_diff"

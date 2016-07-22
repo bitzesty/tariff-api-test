@@ -32,11 +32,12 @@ class TariffDiff
             not_found << full_url
           end
         end
-      }.map(&:body)
+      }
     end
 
     def connection_for(url, host_name)
       Faraday.new(url: url) do |conn|
+        conn.use FaradayMiddleware::FollowRedirects, limit: 3
         conn.request :json
         conn.response :json, :content_type => /\bjson$/
         # conn.response :logger
