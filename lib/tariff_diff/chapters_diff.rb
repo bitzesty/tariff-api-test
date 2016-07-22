@@ -81,7 +81,23 @@ class TariffDiff
         puts "#{responses[1].env.url}: #{responses[1].status}"
       end
       return if responses[0].status != 200 || responses[1].status != 200
-      LOG.info Diffy::Diff.new(JSON.pretty_generate(responses[0].body), JSON.pretty_generate(responses[1].body), :context => 5).to_s
+      first = responses[0].body
+      if first['import_measures']
+        first['import_measures'] = first['import_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+      end
+      if first['export_measures']
+        first['export_measures'] = first['export_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+      end
+
+      second = responses[1].body
+      if second['import_measures']
+        second['import_measures'] = second['import_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+      end
+      if second['export_measures']
+        second['export_measures'] = second['export_measures'].sort{|x,y|x['measure_sid'] <=> y['measure_sid']}
+      end
+
+      LOG.info Diffy::Diff.new(JSON.pretty_generate(first), JSON.pretty_generate(second), :context => 5).to_s
     end
   end
 end
