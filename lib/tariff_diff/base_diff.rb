@@ -24,14 +24,13 @@ class TariffDiff
       puts url
       hosts.map do |h|
         host = send(h)
-        response = host.get(url).tap do |response|
+        host.get(url).tap do |response|
           if response.status != 200
             full_url = response.env[:url].to_s
             ERROR_LOG.info "ERROR: #{full_url}"
             not_found << full_url
           end
         end
-        response.body
       end
     end
 

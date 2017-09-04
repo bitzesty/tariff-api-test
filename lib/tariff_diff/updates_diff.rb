@@ -55,7 +55,7 @@ class TariffDiff
       url = "updates.json" + "?page=#{options[:page]}"
       puts "fetching page #{options[:page]}.."
       responses_for(url).tap do |responses|
-        hosts_updates = responses.map do |response|
+        hosts_updates = responses.map(&:body).map do |response|
           response["updates"].map do |update|
             update["filename"]
           end
@@ -74,7 +74,7 @@ class TariffDiff
     end
 
     def max_page_for(responses)
-      max_pages = responses.map do |response|
+      max_pages = responses.map(&:body).map do |response|
         pagination = response["pagination"]
         (pagination["total_count"] / pagination["per_page"].to_f).ceil
       end
