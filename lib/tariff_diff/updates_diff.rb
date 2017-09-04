@@ -11,7 +11,8 @@ class TariffDiff
       puts "\nFinished."
       puts "Found #{applied_updates[:common].count} common updates"
       hosts.each do |host|
-        puts "#{applied_updates[host.to_sym].count} updates only on #{host}"
+        host_url = instance_variable_get("@#{host}").url_prefix
+        puts "#{applied_updates[host.to_sym].count} updates only on #{host} #{host_url}"
         applied_updates[host.to_sym].each do |update|
           puts "\t- #{update}"
         end
@@ -75,7 +76,7 @@ class TariffDiff
     def max_page_for(responses)
       max_pages = responses.map do |response|
         pagination = response["pagination"]
-        max_page = (pagination["total_count"] / pagination["per_page"].to_f).ceil
+        (pagination["total_count"] / pagination["per_page"].to_f).ceil
       end
       max_pages.max
     end

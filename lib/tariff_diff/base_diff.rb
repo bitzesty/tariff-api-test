@@ -22,17 +22,17 @@ class TariffDiff
 
     def responses_for(url)
       puts url
-      # byebug
-      hosts.map { |h|
+      hosts.map do |h|
         host = send(h)
-        host.get(url).tap do |response|
+        response = host.get(url).tap do |response|
           if response.status != 200
             full_url = response.env[:url].to_s
             ERROR_LOG.info "ERROR: #{full_url}"
             not_found << full_url
           end
         end
-      }
+        response.body
+      end
     end
 
     def connection_for(url, host_name)
